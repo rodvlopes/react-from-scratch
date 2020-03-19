@@ -42,9 +42,9 @@ export class MyPre extends React.Component {
 
   render () {
     return (
-      <pre onClick={this.handleLeftClick}
-        onContextMenu={this.handleRightClick}
-        style={ { backgroundColor: '#eee' } }>
+      <pre className={this.constructor.name}
+        onClick={this.handleLeftClick}
+        onContextMenu={this.handleRightClick}>
         {
           this.props.title &&
           <span style={ { margin: '5px', color: 'darkgreen' } }>

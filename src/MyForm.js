@@ -6,8 +6,7 @@ class MyForm extends React.Component {
     super(props)
     this.state = { nome: '', texto: '' }
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleNomeChange = this.handleNomeChange.bind(this)
-    this.handleTextoChange = this.handleTextoChange.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   handleSubmit (ev) {
@@ -16,24 +15,23 @@ class MyForm extends React.Component {
     console.log('>>', this.state.texto)
   }
 
-  handleNomeChange (ev) {
+  handleChange (ev) {
     ev.preventDefault()
-    this.setState({ nome: ev.target.value })
-  }
-
-  handleTextoChange (ev) {
-    ev.preventDefault()
-    this.setState({ texto: ev.target.value })
+    this.setState({
+      [ev.target.name]: ev.target.value
+    })
   }
 
   render () {
     return (
       <form onSubmit={this.handleSubmit} className={this.constructor.name}>
         <p>Este formulário tem o seu estado controlado pelo React.</p>
-        <label>Nome: </label>
-        <input type="text" value={this.state.nome} onChange={this.handleNomeChange} />
-        <label>Texto: </label>
-        <textarea value={this.state.texto} onChange={this.handleTextoChange}></textarea>
+        <label>Nome:
+          <input name="nome" type="text" value={this.state.nome} onChange={this.handleChange} />
+        </label>
+        <label>Texto:
+          <textarea name="texto" value={this.state.texto} onChange={this.handleChange}></textarea>
+        </label>
       </form>
     )
   }
