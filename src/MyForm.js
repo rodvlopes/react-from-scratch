@@ -7,12 +7,14 @@ class MyForm extends React.Component {
     this.state = { nome: '', texto: '' }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.refFile = React.createRef()
   }
 
   handleSubmit (ev) {
     ev.preventDefault()
     console.log(this.state.nome)
     console.log('>>', this.state.texto)
+    console.log('file (nao controlado)', this.refFile.current.value)
   }
 
   handleChange (ev) {
@@ -31,6 +33,9 @@ class MyForm extends React.Component {
         </label>
         <label>Texto:
           <textarea name="texto" value={this.state.texto} onChange={this.handleChange}></textarea>
+        </label>
+        <label>Arquivo (não controlado):
+          <input name="idade" type="file" ref={this.refFile} />
         </label>
       </form>
     )
