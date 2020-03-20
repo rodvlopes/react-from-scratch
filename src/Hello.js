@@ -2,6 +2,7 @@
 import React from 'react'
 import { MyPre } from './MyPre'
 import MyForm from './MyForm'
+import { FilterableProductTable } from './FilterableProductTable'
 
 const Hello = () =>
   <div>
@@ -101,6 +102,9 @@ const Hello = () =>
 
     <h4>Form: Componentes não controlados VS. controlados</h4>
     <MyForm />
+
+    <h4>Exercício final da parte básica do tutorial</h4>
+    <FilterableProductTable />
   </div>
 
 export default Hello
