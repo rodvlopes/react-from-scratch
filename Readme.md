@@ -2,8 +2,8 @@
 
 Os exercícios estão organizados em branchs e cada branch tem um readme com o conteúdo relevante dele.
 
-* [Conceitos Fundamentais](rodvlopes/react-from-scratch/tree/master)
-* [Router Básico/Code Split/Lazy](rodvlopes/react-from-scratch/tree/react-router-code-split)
+* [Conceitos Fundamentais](/rodvlopes/react-from-scratch/tree/master)
+* [Router Básico/Code Split/Lazy](/rodvlopes/react-from-scratch/tree/react-router-code-split)
 
 ### Master = Template
 
