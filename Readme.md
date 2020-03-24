@@ -2,13 +2,17 @@
 
 Os exercícios estão organizados em branchs e cada branch tem um readme com o conteúdo relevante dele.
 
-* TODO: Listas branchs
+* [Conceitos Fundamentais](rodvlopes/react-from-scratch/tree/master)
+* [Router Básico/Code Split/Lazy](rodvlopes/react-from-scratch/tree/react-router-code-split)
 
-# Main Concepts
+### Master = Template
 
-Todos os tópicos relacionados dos conceitos fundamentais estão estudados neste branch.
+O Branch master pode ser usado como template para um projeto de React com as seguintes características:
 
-https://reactjs.org/docs/hello-world.html
+* Webpack e Webpack dev server
+* Babel
+* ESlint com presets _standards_ e _react_
+* Processador de CSS Stylus
 
 ## Criando o Setup React do Zero
 
@@ -90,6 +94,12 @@ https://reactjs.org/docs/hello-world.html
         },
       ],
     }
+
+# Estudo dos Conceitos Fundamentais
+
+Todos os tópicos relacionados dos conceitos fundamentais estão estudados neste branch.
+
+Link para o tutorial: https://reactjs.org/docs/hello-world.html
 
 ### Funções passados para os eventos devem ser atrelados ao this. (Bind)
 
