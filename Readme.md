@@ -36,6 +36,13 @@ A app deve conter um componente _BrowserRouter_ no nível mais alto e um ou mais
             Route
             Route
 
+### Habilitar History Mode
+
+    devServer: {
+      contentBase: path.join(__dirname, 'public'),
+      historyApiFallback: true
+    }, 
+
 ## Lazy Loding / Code Splitting Conceitos Fundamentais
 
 A forma mais recomensável de fazer code splitting é carregar os componentes de forma _lazy_ ao navegar por eles. Neste setup o code split sai automaticamente. O React oferece a fução _lazy_ e componente Suspense que deve ser necessáriamente usado com componentes lazy.
@@ -44,3 +51,18 @@ A forma mais recomensável de fazer code splitting é carregar os componentes de
     <Suspense fallback={<h3>Loading...</h3>}>
       <Users />
     </Suspense>
+
+### Neste setup o code split funciona automaticamente
+
+É uma funcionalidade do Webpack. Mas precisa de uma parâmetro para que o refresh não falhe. Tem que adiionar o _publicPath_ ao _output_ do webpack.config.js
+
+    output: {
+      path: path.resolve(__dirname, 'public'),
+      publicPath: '/',
+      filename: 'bundle.js'
+    },
+
+*Dica*: Pode-se evitar o cache dos bundles pelo browser com a seguinte configuração:
+       
+    filename: '[contenthash].bundle.js',
+    chunkFilename: '[contenthash].bundle.js'
