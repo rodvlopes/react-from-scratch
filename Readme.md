@@ -5,6 +5,7 @@ Os exercícios estão organizados em branchs e cada branch tem um readme com o c
 * [Conceitos Fundamentais](../../tree/master)
 * [Router Básico/Code Split/Lazy](../../tree/react-router-code-split)
 * [HOC e Error Boundary](../../tree/hoc-and-error-boundaries)
+* [Interagindo com uma Lib de terceiros / jQuery](../../tree/integration-with-other-libs)
 
 ### Master = Template
 
