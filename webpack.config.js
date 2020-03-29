@@ -1,3 +1,4 @@
+const webpack = require( 'webpack' );
 const path = require( 'path' );
 
 module.exports = {
@@ -24,6 +25,10 @@ module.exports = {
         use: 'babel-loader'
       },
       {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
         test: /\.styl$/,
         use: [
           'style-loader',
@@ -32,11 +37,25 @@ module.exports = {
             loader: 'stylus-loader',
           },
         ],
-      }
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
+      },
     ]  
   },
   devServer: {
     contentBase: path.join(__dirname, 'public'),
     historyApiFallback: true
   },
+  plugins : [
+    new webpack.ProvidePlugin({
+      '$': 'jquery',
+      'jQuery': 'jquery',
+    })
+  ]
 };

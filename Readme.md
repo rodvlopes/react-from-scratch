@@ -4,43 +4,44 @@ Os exercícios estão organizados em branchs e cada branch tem um readme com o c
 
 * [Voltar P/ Lista de Tópicos](../../tree/master)
 
-# Parte Avançada: Error Boundaries
+# Parte Avançada: Usando Bibiliotecas Extenas
 
-A forma a adequada para tratar erros na rendererização é utilizando um ErrorBoundary. Este componente especial deve ecapsular os componentes filhos que estão sujeitos a falharem. 
+Para usar bibliotecas que manipulam o DOM diretamente é necessário encapsular a manipulação da biblioteca em um componente.
 
-Para criar um ErrorBoundary basta criar um componente normal extendendo de React.Component e este deve implemnetar os métodos _static getDerivedStateFromError()_ or _componentDidCatch()_.
+# Carregando Bibliotecas com Webpack
 
-    <ErrorBoundary>
-      <MyWidget />
-    </ErrorBoundary>
+A melhor forma que encontrei até agora é fazer com que o webpack forneça essas bibliotecas de forma global sempre que uma referência a ela apareça no código. 
 
+    new webpack.ProvidePlugin({
+      '$': 'jquery',
+      'jQuery': 'jquery',
+    })
 
-Como as falhas no Eventos não impactam na renderização, os error dos *Event Handlers* devem ser tratado com o try...catch do JS.
+# ESLint
 
-# High Order Component
+Tem que avisar ao ESlint que uma bibliteca é fornecida globalmente:
 
-Esta é a melhor forma para encapsular e compartilhar comportamentos em comum aos componentes. Um *HOC* é uma função pura (sem efeitos colaterais) que recebe um componente como argumento (e possivelmente outros argumentos) e retorna um novo componente "bombado" com uma nova funcionalidade.
-
-    // This function takes a component...
-    function withSubscription(WrappedComponent, selectData) {
-      // ...and returns another component...
-      return class extends React.Component {
-        constructor(props) {
-          super(props);
-          this.handleChange = this.handleChange.bind(this);
-          this.state = {
-            data: selectData(DataSource, props)
-          };
-        }
-
-        handleChange() {
-          this.setState({
-            data: selectData(DataSource, this.props)
-          });
-        }
-
-        render() {
-          return <WrappedComponent data={this.state.data} {...this.props} />;
-        }
-      };
+    env {
+      jquery: true
     }
+
+# Carregando CSS do plugins
+
+    import 'plugin_name/style.css'
+
+Obs.: Tem que identificar o arquivo css correspondente dentro do node_modules.
+
+# File Imports
+
+Os arquivos css podem possuir referências a arquivos estáticos (imagens). É necessário um loader para que esses estáticos sejam encontrados pelo Webpack.
+
+    {
+      test: /\.(png|jpe?g|gif)$/i,
+      use: [
+        {
+          loader: 'file-loader',
+        },
+      ],
+    },
+
+    npm install file-loader --save-dev

@@ -1,113 +1,70 @@
+/* eslint "react/prop-types" : 0 */
+/* eslint no-return-assign : 0 */
 import React from 'react'
-import PropTypes from 'prop-types'
 import './global.styl'
 
-export default function Hello () {
-  const data = [
-    { name: 'abóbora', valor: 10 },
-    { name: 'laranja', valor: 5 },
-    { name: 'maça', valor: 1 }, {
-      name:
-     'pitanga',
-      valor: 7
-    }]
-  return (
-    <MyErrorBoundary>
-      <BuggyComponent />
-      <h3>ItensList</h3>
-      <ItensList data={data}/>
-      <h3>ItensList Com Contador (HOC)</h3>
-      <ItensListWithCounter data={data} />
-    </MyErrorBoundary>
-  )
-}
+// jQuery e $ estão sendo injetados pelo webpack
+import 'chosen-js'
+import 'chosen-js/chosen.min.css'
 
-class MyErrorBoundary extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = { error: false }
-  }
-
-  static getDerivedStateFromError (error) {
-    console.log('inside derived', error)
-    return { error: true }
-  }
-
-  componentDidCatch (error, errorInfo) {
-    console.log('Erro caputrado:', error)
-    console.log('Erro Info:', errorInfo)
-  }
-
-  render () {
-    if (this.state.error) {
-      return <h3>Ocorreu um erro. Salve-se quem puder!</h3>
-    } else {
-      return this.props.children
-    }
-  }
-}
-
-MyErrorBoundary.propTypes = {
-  children: PropTypes.array
-}
-
-class BuggyComponent extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = { counter: 0, timer: null }
-  }
-
+/* Chosen ecapsula o contato com a parte não controlada pelo React */
+class Chosen extends React.Component {
   componentDidMount () {
-    const timer = setInterval(() =>
-      this.setState((state) => {
-        return { counter: state.counter + 1 }
-      }),
-    1001000
-    )
-    this.setState({ timer })
+    this.$el = $(this.el)
+    this.$el.chosen()
+
+    this.handleChange = this.handleChange.bind(this)
+    this.$el.on('change', this.handleChange)
   }
 
-  componenteDidUnmount () {
-    clearInterval(this.state.timer)
+  componentDidUpdate (prevProps) {
+    if (prevProps.children !== this.props.children) {
+      this.$el.trigger('chosen:updated')
+    }
+  }
+
+  componentWillUnmount () {
+    this.$el.off('change', this.handleChange)
+    this.$el.chosen('destroy')
+  }
+
+  handleChange (e) {
+    this.props.onChange(e.target.value)
   }
 
   render () {
-    if (this.state.counter > 5) {
-      throw Error('Im a buggy component!')
-    }
     return (
-      <p>Número de infectados pelo novo Corona Vírus: {this.state.counter}</p>
+      <div>
+        <select className="Chosen-select" ref={el => this.el = el}>
+          {this.props.children}
+        </select>
+      </div>
     )
   }
 }
 
-function ItensList (props) {
-  return (
-    <ul className={props.className}>
-      {props.data.map(it => <li key={it.name}>{it.name},  {it.valor}</li>)}
-    </ul>
-  )
-}
-ItensList.propTypes = {
-  data: PropTypes.array,
-  className: PropTypes.string
-}
+export default class Hello extends React.Component {
+  constructor (props) {
+    super(props)
 
-function addCounter (WrappedComponent) {
-  const ComponentWithCounter = (props) => {
-    const total = props.data.reduce((acc, { valor }) => acc + valor, 0)
-    console.log('total', total)
-    const newData = [].concat(props.data)
-    newData.push({ name: 'total', valor: total })
-
-    return (
-      <WrappedComponent className="com-total" data={newData} />
-    )
+    this.state = { valorEscolhido: '' }
+    this.handleChange = this.handleChange.bind(this)
   }
 
-  ComponentWithCounter.propTypes = WrappedComponent.propTypes
+  handleChange (val) {
+    this.setState({ valorEscolhido: val })
+  }
 
-  return ComponentWithCounter
+  render () {
+    return (
+      <>
+        <p>{this.state.valorEscolhido}</p>
+        <Chosen onChange={this.handleChange}>
+          <option>vanilla</option>
+          <option>chocolate</option>
+          <option>strawberry</option>
+        </Chosen>
+      </>
+    )
+  }
 }
-
-const ItensListWithCounter = addCounter(ItensList)
