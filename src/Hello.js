@@ -62,7 +62,7 @@ class BuggyComponent extends React.Component {
       this.setState((state) => {
         return { counter: state.counter + 1 }
       }),
-    1001000
+    1000
     )
     this.setState({ timer })
   }
